@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "releaselens-ai.helloWorld",
-        "title": "Hello World"
+        "command": "releaselens-ai.analyzeReleaseNotes",
+        "title": "ReleaseLens AI: Analyze Release Notes"
       }
     ]
   },

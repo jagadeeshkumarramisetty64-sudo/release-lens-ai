@@ -13,12 +13,23 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('releaselens-ai.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from ReleaseLens AI!');
-	});
+	const disposable = vscode.commands.registerCommand(
+    'releaselens-ai.analyzeReleaseNotes',
+    async () => {
+        const releaseNotesUrl = await vscode.window.showInputBox({
+            prompt: 'Enter the Salesforce Release Notes URL',
+            placeHolder: 'https://help.salesforce.com/...'
+        });
 
+        if (!releaseNotesUrl) {
+            return;
+        }
+
+        vscode.window.showInformationMessage(
+            `Release Notes URL: ${releaseNotesUrl}`
+        );
+    }
+);
 	context.subscriptions.push(disposable);
 }
 
