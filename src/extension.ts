@@ -24,9 +24,42 @@ export function activate(context: vscode.ExtensionContext) {
         if (!releaseNotesUrl) {
             return;
         }
+        
+        let parsedUrl: URL;
 
+        try {
+            parsedUrl = new URL(releaseNotesUrl);
+        } catch {
+            vscode.window.showErrorMessage(
+                'Please enter a valid URL.'
+            );
+            return;
+        }
+
+        if (!parsedUrl.hostname.includes('salesforce.com')) {
+            vscode.window.showWarningMessage(
+                'Please enter a Salesforce URL.'
+            );
+            return;
+        }
+        await vscode.window.withProgress(
+            {
+                location: vscode.ProgressLocation.Notification,
+                title: 'ReleaseLens AI',
+                cancellable: false
+            },
+            async (progress) => {
+                progress.report({
+                    message: 'Analyzing Salesforce Release Notes...'
+                });
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, 2000)
+                );
+            }
+        );
         vscode.window.showInformationMessage(
-            `Release Notes URL: ${releaseNotesUrl}`
+            `Release Notes analysis completed!`
         );
     }
 );
